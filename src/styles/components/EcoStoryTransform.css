@@ -1,8 +1,44 @@
 .eco-story-section {
-  padding: 6rem 0;
+  position: relative;
+  padding: 8rem 0;
   background-color: var(--color-white);
   border-top: 1px solid var(--color-cream-100);
   border-bottom: 1px solid var(--color-cream-100);
+  overflow: hidden;
+}
+
+/* Scenery Backdrop elements */
+.nature-backdrop-scenery {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--transition-slow);
+}
+
+.nature-vector-tree {
+  position: absolute;
+  bottom: 0;
+  width: 140px;
+  height: auto;
+  opacity: 0.25;
+}
+
+.tree-1 {
+  left: 5%;
+  width: 120px;
+}
+
+.tree-2 {
+  right: 6%;
+  width: 150px;
+  bottom: 10px;
+}
+
+.tree-3 {
+  left: 22%;
+  width: 90px;
+  opacity: 0.15;
 }
 
 .eco-container {
@@ -10,6 +46,8 @@
   grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
   gap: 4rem;
+  position: relative;
+  z-index: 2;
 }
 
 /* Left Narrative Column */
@@ -35,78 +73,64 @@
   margin-bottom: 1.5rem;
 }
 
-.leaf-icon {
+.eco-badge-icon {
   color: var(--color-emerald-600);
 }
 
 .eco-title {
   font-family: var(--font-heading);
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   color: var(--color-emerald-900);
-  margin-bottom: 1rem;
-}
-
-.eco-subtitle {
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 2.5rem;
-}
-
-.eco-points-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-  margin-bottom: 2.5rem;
-  width: 100%;
-}
-
-.eco-point-item {
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-
-.eco-point-num {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: var(--color-saffron-600);
+  margin-bottom: 1.25rem;
   line-height: 1.2;
 }
 
-.eco-point-text {
-  flex: 1;
+.saffron-text {
+  color: var(--color-saffron-600);
 }
 
-.eco-point-title {
+.eco-description {
   font-family: var(--font-body);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  max-width: 580px;
+}
+
+/* Eco Sourcing Promises */
+.eco-promises {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.promise-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.promise-icon {
+  color: var(--color-emerald-800);
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.promise-item h4 {
+  font-family: var(--font-body);
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-emerald-900);
   margin-bottom: 0.25rem;
 }
 
-.eco-point-desc {
+.promise-item p {
   font-family: var(--font-body);
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.eco-action-row {
-  display: flex;
-  align-items: center;
-}
-
-.eco-trust-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-emerald-800);
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
 }
 
 /* Right Morphing Column */
@@ -114,12 +138,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
-.morph-graphic-container {
+.morph-container-card {
   width: 100%;
-  max-width: 400px;
-  padding: 2.5rem;
+  max-width: 380px;
+  padding: 2.25rem;
   border-radius: var(--border-radius-xl);
   display: flex;
   flex-direction: column;
@@ -129,46 +154,40 @@
   background: var(--gradient-glass);
 }
 
-/* Switch styling */
-.morph-modes-switch {
-  display: flex;
-  background-color: var(--color-cream-100);
-  padding: 0.35rem;
-  border-radius: var(--border-radius-md);
-  gap: 0.25rem;
-  margin-bottom: 2rem;
-  border: 1px solid var(--color-cream-200);
+.morph-indicator-badge {
+  margin-bottom: 1.5rem;
 }
 
-.mode-btn {
-  display: flex;
+.badge-tag {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
   border-radius: var(--border-radius-sm);
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: var(--color-text-muted);
-  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.mode-btn.active {
-  background-color: var(--color-emerald-800);
-  color: var(--color-text-white);
-  box-shadow: var(--shadow-sm);
+.plate-theme {
+  background-color: var(--color-emerald-50);
+  color: var(--color-emerald-800);
+  border: 1px solid var(--color-emerald-100);
 }
 
-/* Custom color for Active Sun Mode button */
-.morph-modes-switch button:nth-child(2).active {
-  background-color: var(--color-saffron-600);
+.sun-theme {
+  background-color: var(--color-saffron-50);
+  color: var(--color-saffron-800);
+  border: 1px solid var(--color-saffron-100);
 }
 
 /* SVG Box Styling */
 .svg-morph-wrapper {
   position: relative;
-  width: 240px;
-  height: 240px;
+  width: 230px;
+  height: 230px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,88 +201,35 @@
 
 /* SVG Elements & Transitions */
 .svg-aura {
+  fill: rgba(15, 81, 50, 0.03);
   transition: fill var(--transition-slow);
 }
 
 .morphing-core-shape {
-  transition: d var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1),
+  transition: d var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1),
               fill var(--transition-slow),
               stroke var(--transition-slow);
 }
 
 .sun-rays {
   transform-origin: 100px 100px;
-  transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
 .ray-line {
-  stroke: var(--color-saffron-600);
   transition: stroke var(--transition-slow);
 }
 
-.leaf-veins {
-  transition: opacity var(--transition-slow);
-  stroke: var(--color-emerald-800);
-  fill: none;
-  stroke-linecap: round;
-}
-
-.vein-side {
-  opacity: 0.7;
-}
-
 .core-accent {
-  fill: var(--color-white);
-  opacity: 0.3;
-  pointer-events: none;
   transition: r var(--transition-slow);
 }
 
-/* Leaf state active attributes */
-.leaf-state .svg-aura {
-  fill: rgba(15, 81, 50, 0.05);
-}
-
-.leaf-state .morphing-core-shape {
-  fill: rgba(15, 81, 50, 0.1);
-  stroke: var(--color-emerald-800);
-}
-
-.leaf-state .sun-rays {
-  opacity: 0;
-  transform: scale(0.6) rotate(-45deg);
-}
-
-.leaf-state .leaf-veins {
-  opacity: 0.85;
-}
-
-.leaf-state .core-accent {
-  r: 0px; /* Hide inner core in leaf */
-}
-
-/* Sun state active attributes */
+/* Active Morph States */
 .sun-state .svg-aura {
-  fill: rgba(217, 119, 6, 0.08);
-}
-
-.sun-state .morphing-core-shape {
-  fill: var(--color-saffron-400);
-  stroke: var(--color-saffron-600);
+  fill: rgba(217, 119, 6, 0.06);
 }
 
 .sun-state .sun-rays {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
-  animation: spice-rotate 30s linear infinite;
-}
-
-.sun-state .leaf-veins {
-  opacity: 0;
-}
-
-.sun-state .core-accent {
-  r: 12px;
+  animation: spice-rotate 35s linear infinite;
 }
 
 /* Floating bubble label */
@@ -271,13 +237,13 @@
   position: absolute;
   bottom: -0.5rem;
   background-color: var(--color-white);
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.85rem;
   border-radius: var(--border-radius-md);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--color-cream-100);
@@ -285,7 +251,7 @@
 
 .accent-icon-pulse {
   color: var(--color-emerald-600);
-  animation: float 2s infinite ease-in-out;
+  animation: float 2.5s infinite ease-in-out;
 }
 
 .accent-icon-spin {
@@ -295,26 +261,10 @@
 
 .morph-interactive-label {
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--color-text-muted);
   font-weight: 600;
-}
-
-/* Responsiveness adjustments */
-@media (max-width: 840px) {
-  .eco-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-  
-  .eco-narrative {
-    align-items: center;
-    text-align: center;
-  }
-  
-  .eco-badge {
-    align-self: center;
-  }
+  text-align: center;
 }
 
 /* Animated vertical section connector line styles */
@@ -323,8 +273,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 3rem;
-  margin-bottom: -9rem; /* pull next section closer to continue visual flow */
+  margin-top: 3.5rem;
+  margin-bottom: -11rem; /* Pull heritage section closer */
   position: relative;
   z-index: 10;
   pointer-events: none;
@@ -349,4 +299,25 @@
 .pulse-saffron-dot {
   transform-origin: 20px 90px;
   animation: float 2s infinite ease-in-out;
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 840px) {
+  .eco-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .eco-narrative {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .eco-badge {
+    align-self: center;
+  }
+  
+  .nature-vector-tree {
+    display: none; /* Hide background trees on mobile to avoid overflow clutter */
+  }
 }

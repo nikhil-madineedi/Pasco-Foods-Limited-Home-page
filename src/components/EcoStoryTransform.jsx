@@ -1,71 +1,134 @@
-import React, { useState } from 'react';
-import { sourcingStory } from '../data/pascoProducts';
-import { Sun, Leaf, ArrowRight, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Leaf, Sun, CheckCircle } from 'lucide-react';
 import '../styles/components/EcoStoryTransform.css';
 
 export default function EcoStoryTransform() {
-  const [isSunMode, setIsSunMode] = useState(false);
+  const sectionRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Track scroll progress of this section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const scrollTop = window.scrollY || window.pageYOffset;
+      
+      const sectionTop = scrollTop + rect.top;
+      const sectionHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+
+      // Start calculating progress when the top of the section enters the viewport
+      const start = sectionTop - viewportHeight;
+      const end = sectionTop + sectionHeight;
+
+      if (scrollTop >= start && scrollTop <= end) {
+        const progress = (scrollTop - start) / (end - start);
+        setScrollProgress(progress);
+      } else if (scrollTop < start) {
+        setScrollProgress(0);
+      } else if (scrollTop > end) {
+        setScrollProgress(1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Determine transition stages
+  // As scrollProgress goes from 0 to 1, we cross the threshold at 0.5
+  const isSunActive = scrollProgress > 0.55;
+  const transitionProgress = Math.min(Math.max((scrollProgress - 0.2) / 0.6, 0), 1); // maps 0.2-0.8 to 0-1
 
   return (
-    <section id="eco-story" className="eco-story-section">
-      <div className="container eco-container">
+    <section ref={sectionRef} id="eco-story" className="eco-story-section">
+      
+      {/* Background scenery layer (fades in as user scrolls) */}
+      <div className="nature-backdrop-scenery" style={{ opacity: 0.1 + transitionProgress * 0.45 }}>
+        {/* Simplified vector trees representing farm sourcing */}
+        <div className="nature-vector-tree tree-1">
+          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 20 L20 80 L80 80 Z" fill="var(--color-emerald-800)" />
+            <path d="M50 40 L30 90 L70 90 Z" fill="var(--color-emerald-900)" />
+            <rect x="46" y="90" width="8" height="25" fill="#5c4033" />
+          </svg>
+        </div>
+        <div className="nature-vector-tree tree-2">
+          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 10 L15 70 L85 70 Z" fill="var(--color-emerald-700)" />
+            <path d="M50 30 L25 80 L75 80 Z" fill="var(--color-emerald-800)" />
+            <rect x="46" y="80" width="8" height="30" fill="#5c4033" />
+          </svg>
+        </div>
+        <div className="nature-vector-tree tree-3">
+          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 30 L25 85 L75 85 Z" fill="var(--color-emerald-800)" />
+            <rect x="47" y="85" width="6" height="20" fill="#5c4033" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="eco-container container">
         
         {/* Left Column: Sourcing Narrative */}
         <div className="eco-narrative">
           <div className="eco-badge">
-            <Leaf size={14} className="leaf-icon" />
-            <span>100% Seed-to-Spoon Integrity</span>
+            <Leaf size={16} className="eco-badge-icon" />
+            <span>100% NATURAL SOURCE</span>
           </div>
-          
-          <h2 className="eco-title">{sourcingStory.title}</h2>
-          <p className="eco-subtitle">{sourcingStory.subtitle}</p>
 
-          <div className="eco-points-list">
-            {sourcingStory.points.map((pt, idx) => (
-              <div key={idx} className="eco-point-item">
-                <div className="eco-point-num">0{idx + 1}</div>
-                <div className="eco-point-text">
-                  <h3 className="eco-point-title">{pt.title}</h3>
-                  <p className="eco-point-desc">{pt.description}</p>
-                </div>
+          <h2 className="eco-title">
+            Naturally Crafted, <br />
+            <span className="saffron-text">Sun-Cured Integrity.</span>
+          </h2>
+
+          <p className="eco-description">
+            Our mission is simple: authentic Indian flavors free from E numbers, saturated fats, artificial thickeners, starches, or excess water. Just raw spices matured under the British and Indian sun.
+          </p>
+
+          <div className="eco-promises">
+            <div className="promise-item">
+              <CheckCircle size={18} className="promise-icon" />
+              <div>
+                <h4>Zero Artificial Additives</h4>
+                <p>No artificial colors, MSG, or chemical preservatives enter our kitchen recipes.</p>
               </div>
-            ))}
-          </div>
-
-          <div className="eco-action-row">
-            <span className="eco-trust-label">
-              <ShieldCheck size={16} />
-              <span>Certified Pesticide-Free Sourcing</span>
-            </span>
+            </div>
+            <div className="promise-item">
+              <CheckCircle size={18} className="promise-icon" />
+              <div>
+                <h4>Sun-Cured Maturation</h4>
+                <p>Pickles aged for up to 40 days in traditional stone jars under natural warmth.</p>
+              </div>
+            </div>
+            <div className="promise-item">
+              <CheckCircle size={18} className="promise-icon" />
+              <div>
+                <h4>Pure Herb Blends</h4>
+                <p>Authentic spice combinations ground slowly to retain native volatile oils.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Right Column: Interactive SVG Plate-to-Sun Morph Graphic */}
+        {/* Right Column: Dynamic SVG Morph Box (Plate to Sun) */}
         <div className="eco-visual-col">
-          <div className="morph-graphic-container glass-panel">
+          <div className="morph-container-card glass-panel">
             
-            {/* Interactive Toggle Switch */}
-            <div className="morph-modes-switch">
-              <button 
-                className={`mode-btn ${!isSunMode ? 'active' : ''}`}
-                onClick={() => setIsSunMode(false)}
-              >
-                <Leaf size={14} />
-                <span>Soil & Leaf</span>
-              </button>
-              <button 
-                className={`mode-btn ${isSunMode ? 'active' : ''}`}
-                onClick={() => setIsSunMode(true)}
-              >
-                <Sun size={14} />
-                <span>Sun-Cured</span>
-              </button>
+            {/* Interactive Toggle display */}
+            <div className="morph-indicator-badge">
+              {isSunActive ? (
+                <span className="badge-tag sun-theme"><Sun size={12} /> Sun-Cured Mode</span>
+              ) : (
+                <span className="badge-tag plate-theme"><Leaf size={12} /> Plate Outline Mode</span>
+              )}
             </div>
 
             {/* SVG Morph Box */}
             <div className="svg-morph-wrapper">
               <svg 
-                className={`morph-svg ${isSunMode ? 'sun-state' : 'leaf-state'}`} 
+                className={`morph-svg ${isSunActive ? 'sun-state' : 'plate-state'}`} 
                 viewBox="0 0 200 200" 
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -76,38 +139,45 @@ export default function EcoStoryTransform() {
                 <circle 
                   cx="100" 
                   cy="100" 
-                  r={isSunMode ? 88 : 45} 
-                  className="dish-outline-ring" 
+                  r={isSunActive ? 85 : 55} 
+                  className="dish-outline-ring ring-1" 
                   strokeWidth="1.5" 
                   fill="none" 
                   style={{
                     transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-                    opacity: isSunMode ? 0.15 : 0.6,
-                    stroke: isSunMode ? 'var(--color-saffron-600)' : 'var(--color-emerald-800)'
+                    opacity: isSunActive ? 0.15 : 0.65,
+                    stroke: isSunActive ? 'var(--color-saffron-600)' : 'var(--color-emerald-800)'
                   }}
                 />
                 <circle 
                   cx="100" 
                   cy="100" 
-                  r={isSunMode ? 96 : 55} 
-                  className="dish-outline-ring" 
+                  r={isSunActive ? 95 : 65} 
+                  className="dish-outline-ring ring-2" 
                   strokeWidth="1" 
                   fill="none" 
                   style={{
                     transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-                    opacity: isSunMode ? 0.1 : 0.4,
-                    stroke: isSunMode ? 'var(--color-saffron-500)' : 'var(--color-emerald-600)'
+                    opacity: isSunActive ? 0.08 : 0.45,
+                    stroke: isSunActive ? 'var(--color-saffron-500)' : 'var(--color-emerald-600)'
                   }}
                 />
 
                 {/* Sun Ray Rays Group (Always present, scales in Sun state) */}
-                <g className="sun-rays">
+                <g 
+                  className="sun-rays"
+                  style={{
+                    opacity: isSunActive ? 1 : 0,
+                    transform: `scale(${isSunActive ? 1 : 0.6})`,
+                    transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                >
                   {Array.from({ length: 12 }).map((_, i) => {
                     const angle = (i * 30 * Math.PI) / 180;
-                    const x1 = 100 + Math.cos(angle) * 55;
-                    const y1 = 100 + Math.sin(angle) * 55;
-                    const x2 = 100 + Math.cos(angle) * 75;
-                    const y2 = 100 + Math.sin(angle) * 75;
+                    const x1 = 100 + Math.cos(angle) * 52;
+                    const y1 = 100 + Math.sin(angle) * 52;
+                    const x2 = 100 + Math.cos(angle) * 72;
+                    const y2 = 100 + Math.sin(angle) * 72;
                     return (
                       <line 
                         key={i} 
@@ -116,41 +186,37 @@ export default function EcoStoryTransform() {
                         x2={x2} 
                         y2={y2} 
                         className="ray-line" 
-                        strokeWidth="3"
+                        strokeWidth="3.5"
                         strokeLinecap="round"
+                        stroke="var(--color-saffron-600)"
                       />
                     );
                   })}
                 </g>
 
-                {/* Leaf veins Group (Visible in Leaf state) */}
-                <g className="leaf-veins">
-                  <path d="M100,50 L100,150" className="vein-main" strokeWidth="2.5" />
-                  <path d="M100,80 Q120,70 135,65" className="vein-side" strokeWidth="1.5" />
-                  <path d="M100,110 Q120,100 130,95" className="vein-side" strokeWidth="1.5" />
-                  <path d="M100,90 Q80,80 65,75" className="vein-side" strokeWidth="1.5" />
-                  <path d="M100,120 Q80,110 70,105" className="vein-side" strokeWidth="1.5" />
-                </g>
-
-                {/* Core Morph Shape (Leaf / Circle-Sun) */}
-                {/* In Leaf mode it's a leaf, in Sun mode it's a glowing circle */}
+                {/* Core Morph Shape (Plate outline / Golden Sun core) */}
                 <path 
                   className="morphing-core-shape"
-                  d={isSunMode 
+                  d={isSunActive 
                     ? "M100,50 A50,50 0 1,1 99.9,50 Z" /* Perfect Sun Circle */
-                    : "M100,45 Q155,100 100,155 Q45,100 100,45 Z" /* Symmetrical Organic Leaf */
+                    : "M100,60 A40,40 0 1,1 99.9,60 Z" /* Plate Dish outline */
                   }
                   strokeWidth="3"
                   strokeLinecap="round"
+                  fill={isSunActive ? "var(--color-saffron-400)" : "rgba(15, 81, 50, 0.05)"}
+                  stroke={isSunActive ? "var(--color-saffron-600)" : "var(--color-emerald-800)"}
+                  style={{
+                    transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
                 />
 
                 {/* Center Core Accent */}
-                <circle cx="100" cy="100" r="15" className="core-accent" />
+                <circle cx="100" cy="100" r={isSunActive ? 12 : 6} className="core-accent" fill="var(--color-white)" />
               </svg>
 
-              {/* Floating detail tag */}
+              {/* Sourcing fact tag */}
               <div className="morph-hint-bubble">
-                {isSunMode ? (
+                {isSunActive ? (
                   <>
                     <Sun size={14} className="accent-icon-spin" />
                     <span>Traditional 40-Day Sun Curing</span>
@@ -158,14 +224,14 @@ export default function EcoStoryTransform() {
                 ) : (
                   <>
                     <Leaf size={14} className="accent-icon-pulse" />
-                    <span>Raw Organic Spice Sourcing</span>
+                    <span>Chemical-Free 100% Pure Sourcing</span>
                   </>
                 )}
               </div>
             </div>
 
             <p className="morph-interactive-label">
-              Click toggle switches to morph energy elements
+              Scroll down to morph the plate outlines into the glowing sun
             </p>
 
           </div>
