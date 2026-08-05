@@ -209,3 +209,57 @@
     grid-template-columns: 1fr;
   }
 }
+
+.brand-narrative-copy {
+  max-width: 800px;
+  margin: 0 auto;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Tractor sourcing track styles */
+.tractor-track-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 6rem;
+  padding-bottom: 2rem;
+  overflow: hidden;
+}
+
+.dirt-road-line {
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-cream-300);
+  border-bottom: 2px dashed rgba(15, 81, 50, 0.1);
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+}
+
+.tractor-avatar {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  transition: left 0.1s ease-out; /* Smooth driving inertia */
+  z-index: 5;
+}
+
+.tractor-avatar svg {
+  display: block;
+}
+
+.tractor-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-emerald-800);
+  letter-spacing: 1px;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+.wheel-spin {
+  transition: transform 0.1s ease-out;
+}
