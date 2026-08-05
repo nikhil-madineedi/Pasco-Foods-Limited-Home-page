@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Loader from './components/Loader';
-import Navbar from './components/Navbar';
-import HeroShowcase from './components/HeroShowcase';
-import CategoryNav from './components/CategoryNav';
-import PlateShowcase from './components/PlateShowcase';
-import EcoStoryTransform from './components/EcoStoryTransform';
-import BrandOrigin from './components/BrandOrigin';
-import Footer from './components/Footer';
-import DocumentationModal from './components/DocumentationModal';
+import Loader from './components/Loader.jsx';
+import Navbar from './components/Navbar.jsx';
+import HeroShowcase from './components/HeroShowcase.jsx';
+import CategoryNav from './components/CategoryNav.jsx';
+import PlateShowcase from './components/PlateShowcase.jsx';
+import EcoStoryTransform from './components/EcoStoryTransform.jsx';
+import BrandOrigin from './components/BrandOrigin.jsx';
+import Footer from './components/Footer.jsx';
+import DocumentationModal from './components/DocumentationModal.jsx';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);

@@ -40,7 +40,7 @@ export default function Loader({ onFinish }) {
       setFactIndex((prev) => (prev + 1) % funFacts.length);
     }, 4000);
 
-    return () => factInterval(factInterval);
+    return () => clearInterval(factInterval);
   }, []);
 
   return (
