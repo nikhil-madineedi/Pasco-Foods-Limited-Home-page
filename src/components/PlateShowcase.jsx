@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { pascoProducts } from '../data/pascoProducts';
 import { Flame, ShoppingCart, Eye, ChefHat, Sparkles } from 'lucide-react';
+import useScrollProgress from '../hooks/useScrollProgress.js';
 import '../styles/components/PlateShowcase.css';
 
 export default function PlateShowcase({ activeCategory }) {
+  // Track scroll position
+  const { scrollY } = useScrollProgress();
+
   // Filter products by active category
   const filteredProducts = activeCategory === 'all' 
     ? pascoProducts 
@@ -65,6 +69,23 @@ export default function PlateShowcase({ activeCategory }) {
             {/* Left Detail Column: 3D Rotating Dish Plate & Spice animation */}
             <div className="detail-visual-col">
               <div className="detail-glow" style={{ backgroundColor: selectedProduct.accentColor + '15' }}></div>
+              
+              {/* Semi-circular SVG rotational arrows bound to scroll */}
+              <div 
+                className="plate-rotational-arrows"
+                style={{ transform: `rotate(${scrollY * 0.1}deg)` }}
+              >
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Top Right Semi-Circle Arrow */}
+                  <path d="M 100 12 A 88 88 0 0 1 188 100" stroke="var(--color-saffron-600)" strokeWidth="2" strokeLinecap="round" strokeDasharray="5 5" />
+                  <path d="M 188 100 L 181 91 M 188 100 L 195 91" stroke="var(--color-saffron-600)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  
+                  {/* Bottom Left Semi-Circle Arrow */}
+                  <path d="M 100 188 A 88 88 0 0 1 12 100" stroke="var(--color-saffron-600)" strokeWidth="2" strokeLinecap="round" strokeDasharray="5 5" />
+                  <path d="M 12 100 L 19 109 M 12 100 L 5 109" stroke="var(--color-saffron-600)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+
               <div className={`plate-3d-wrapper ${isRotating ? 'spinning' : ''}`}>
                 <img 
                   src={selectedProduct.dishImage || '/src/assets/plated_tikka_masala.jpg'} 
