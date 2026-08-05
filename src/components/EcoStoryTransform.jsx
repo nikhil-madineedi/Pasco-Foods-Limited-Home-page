@@ -72,6 +72,34 @@ export default function EcoStoryTransform() {
                 {/* Background Aura */}
                 <circle cx="100" cy="100" r="80" className="svg-aura" />
 
+                {/* Concentric circular dish outlines that expand and fade */}
+                <circle 
+                  cx="100" 
+                  cy="100" 
+                  r={isSunMode ? 88 : 45} 
+                  className="dish-outline-ring" 
+                  strokeWidth="1.5" 
+                  fill="none" 
+                  style={{
+                    transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                    opacity: isSunMode ? 0.15 : 0.6,
+                    stroke: isSunMode ? 'var(--color-saffron-600)' : 'var(--color-emerald-800)'
+                  }}
+                />
+                <circle 
+                  cx="100" 
+                  cy="100" 
+                  r={isSunMode ? 96 : 55} 
+                  className="dish-outline-ring" 
+                  strokeWidth="1" 
+                  fill="none" 
+                  style={{
+                    transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                    opacity: isSunMode ? 0.1 : 0.4,
+                    stroke: isSunMode ? 'var(--color-saffron-500)' : 'var(--color-emerald-600)'
+                  }}
+                />
+
                 {/* Sun Ray Rays Group (Always present, scales in Sun state) */}
                 <g className="sun-rays">
                   {Array.from({ length: 12 }).map((_, i) => {
@@ -143,6 +171,15 @@ export default function EcoStoryTransform() {
           </div>
         </div>
 
+      </div>
+      
+      {/* Animated downward dynamic connector arrow linking to heritage section below */}
+      <div className="section-connector-arrow">
+        <svg width="40" height="100" viewBox="0 0 40 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 0 L20 80" stroke="var(--color-emerald-800)" strokeWidth="2" strokeDasharray="5 5" className="dash-flow-line" />
+          <path d="M12 70 L20 80 L28 70" stroke="var(--color-emerald-800)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="20" cy="90" r="4" fill="var(--color-saffron-600)" className="pulse-saffron-dot" />
+        </svg>
       </div>
     </section>
   );

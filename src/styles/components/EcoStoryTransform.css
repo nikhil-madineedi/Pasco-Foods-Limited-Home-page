@@ -316,3 +316,37 @@
     align-self: center;
   }
 }
+
+/* Animated vertical section connector line styles */
+.section-connector-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 3rem;
+  margin-bottom: -9rem; /* pull next section closer to continue visual flow */
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.section-connector-arrow svg {
+  overflow: visible;
+}
+
+/* Keyframe for running dash line animation representing energy flow */
+@keyframes lineDashFlow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.dash-flow-line {
+  stroke-dasharray: 8 4;
+  animation: lineDashFlow 1.8s infinite linear;
+}
+
+.pulse-saffron-dot {
+  transform-origin: 20px 90px;
+  animation: float 2s infinite ease-in-out;
+}
