@@ -1,0 +1,126 @@
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-cream-50);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.loader-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  padding: 2rem;
+}
+
+.spice-wheel-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 2rem;
+}
+
+.spice-wheel {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: spice-rotate 8s linear infinite;
+  color: var(--color-emerald-800);
+}
+
+.wheel-track {
+  fill: none;
+  stroke: var(--color-cream-200);
+  stroke-width: 3;
+}
+
+.wheel-progress {
+  fill: none;
+  stroke: var(--color-saffron-600);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 283; /* 2 * PI * r (r = 45) -> ~283 */
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.mandala-design {
+  color: var(--color-emerald-800);
+}
+
+.loader-percentage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-emerald-900);
+}
+
+.loader-brand {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  letter-spacing: 6px;
+  color: var(--color-emerald-800);
+  margin-bottom: 0.5rem;
+}
+
+.loader-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-sunset);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 1.5rem;
+}
+
+.loader-fact-container {
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fact-label {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--color-saffron-800);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.fact-text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  animation: loaderTextReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes loaderTextReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
