@@ -1,9 +1,8 @@
-.hero-section {
+/* Full-Bleed Culinary Stage CSS */
+.hero-stage-outer {
   position: relative;
-  padding: 2rem 0 6rem 0;
   margin-top: var(--navbar-height);
-  overflow: hidden;
-  background: radial-gradient(circle at 80% 20%, rgba(217, 119, 6, 0.03) 0%, transparent 60%);
+  width: 100%;
 }
 
 /* Factory shop notification header */
@@ -35,348 +34,205 @@
   text-transform: uppercase;
 }
 
-.hero-container {
+/* 3-Column stage layout */
+.hero-culinary-stage {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1.2fr 1fr 1.5fr; /* Plate | Jar | Info */
   align-items: center;
-  gap: 4rem;
-  padding-top: 3rem;
-  min-height: calc(100vh - var(--navbar-height) - 160px);
+  min-height: 82vh;
+  width: 100%;
+  background-color: #faf7f0; /* Warm organic cream */
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 4rem 2rem 0; /* no left padding so plate bleeds to edge */
 }
 
-/* Left Content Column */
-.hero-content {
+/* 50% Bleeding Plate Layout on Left Edge */
+.plate-bleed-container {
+  position: relative;
+  margin-left: -30%; /* Crops plate halfway on viewport edge */
+  width: 130%;
+  aspect-ratio: 1 / 1;
+}
+
+.rotating-half-plate {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 20px 0 40px rgba(45, 24, 16, 0.12);
+  /* Binds rotation to scroll progression */
+  transform: rotate(calc(var(--scroll-progress, 0) * 360deg));
+  transition: transform 0.1s linear;
+}
+
+.curved-pointing-arrow {
+  position: absolute;
+  top: 25%;
+  right: -5%;
+  width: 120px;
+  height: 80px;
+  pointer-events: none;
+}
+
+/* Center Jar Styling */
+.hero-jar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.heat-badge {
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+}
+
+.hero-jar-img {
+  max-height: 420px;
+  width: auto;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.18));
+}
+
+/* Typography & Info details */
+.recipe-info-container {
+  padding-left: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--color-emerald-50);
-  border: 1px solid var(--color-emerald-100);
-  color: var(--color-emerald-800);
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-md);
+.accent-subtitle {
+  font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.badge-icon {
   color: var(--color-saffron-600);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
 .hero-title {
-  font-family: var(--font-heading);
-  font-size: 3.6rem;
-  font-weight: 800;
-  line-height: 1.15;
-  color: var(--color-emerald-900);
-  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  line-height: 1.1;
+  color: #0f5132; /* Deep emerald */
+  margin: 0.75rem 0 1.25rem 0;
 }
 
-.accent-text {
-  color: var(--color-saffron-600);
-}
-
-.hero-subtitle {
+.hero-description {
   font-family: var(--font-body);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
+  color: #524b42;
   line-height: 1.6;
-  color: var(--color-text-secondary);
-  margin-bottom: 2rem;
-  max-width: 580px;
+  margin-bottom: 1.75rem;
 }
 
-.hero-features {
+.recipe-tags {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-
-.hero-feat-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-.feat-check {
-  width: 22px;
-  height: 22px;
-  border-radius: var(--border-radius-round);
-  background-color: var(--color-emerald-100);
-  color: var(--color-emerald-800);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-ctas {
-  display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
-}
-
-/* Right Pairing Column */
-.hero-pairing-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.pairing-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(15, 81, 50, 0.08);
-  padding-bottom: 0.75rem;
-}
-
-.pairing-section-title {
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
-  color: var(--color-emerald-900);
-}
-
-.pairing-selector-tabs {
-  display: flex;
   gap: 0.5rem;
+  margin-bottom: 2rem;
 }
 
-.pairing-tab-btn {
-  padding: 0.4rem 0.85rem;
+.pill-tag {
+  display: inline-block;
+  background: #f3ebd8;
+  color: #2d1810;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-cream-100);
-  transition: all var(--transition-fast);
+  font-weight: 600;
 }
 
-.pairing-tab-btn:hover {
-  color: var(--color-emerald-800);
-}
-
-.pairing-tab-btn.active {
-  background-color: var(--color-emerald-800);
-  color: var(--color-text-white);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Dynamic Pairing Display Card */
-.pairing-display-card {
-  display: grid;
-  grid-template-columns: 1.1fr 0.8fr 1.1fr;
-  align-items: center;
+/* Premium Buttons */
+.cta-group {
+  display: flex;
   gap: 1rem;
-  padding: 2.5rem;
-  border-radius: var(--border-radius-xl);
-  background: var(--gradient-glass);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: var(--shadow-lg);
 }
 
-.pairing-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  position: relative;
-}
-
-.pairing-lbl {
+.primary-btn-link {
+  background: #0f5132;
+  color: #ffffff !important;
+  padding: 0.9rem 1.8rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
   font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
+  transition: all var(--transition-fast);
+  text-decoration: none;
 }
 
-.pairing-badge-heat {
-  position: absolute;
-  top: 1.8rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--color-saffron-50);
-  border: 1px solid var(--color-saffron-100);
-  color: var(--color-saffron-800);
+.primary-btn-link:hover {
+  background-color: var(--color-emerald-950);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.secondary-btn-link {
+  background: transparent;
+  color: #0f5132 !important;
+  padding: 0.9rem 1.8rem;
+  border-radius: 8px;
+  border: 1.5px solid #0f5132;
+  font-weight: 600;
+  cursor: pointer;
   font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--border-radius-sm);
-  z-index: 5;
+  transition: all var(--transition-fast);
+  text-decoration: none;
 }
 
-.pairing-image {
-  object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.1));
+.secondary-btn-link:hover {
+  background-color: rgba(15, 81, 50, 0.05);
+  transform: translateY(-2px);
 }
 
-.jar-img {
-  height: 180px;
-  margin-top: 1rem;
-  animation: float 6s ease-in-out infinite;
-}
-
-.plate-img {
-  height: 170px;
-  border-radius: var(--border-radius-round);
-  margin-top: 0.5rem;
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-.pairing-item-title {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--color-emerald-900);
-  margin-top: 1.25rem;
-}
-
-/* Curved Pointing Arrow */
-.pairing-arrow-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.curved-pointing-arrow {
-  width: 90px;
-  height: 90px;
-  animation: floatArrow 2.5s infinite ease-in-out;
-}
-
-.arrow-caption-text {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--color-saffron-600);
-  letter-spacing: 1px;
-  margin-top: 0.25rem;
-  text-align: center;
-}
-
-.pairing-desc-caption {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  text-align: center;
-  padding: 0 1rem;
-}
-
-/* Steam Animation Effects */
-.steam-wrapper {
-  position: absolute;
-  top: 10%;
-  height: 60px;
-  width: 60px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  pointer-events: none;
-}
-
-.steam-line {
-  width: 3px;
-  height: 30px;
-  background: linear-gradient(to top, rgba(217, 119, 6, 0.3), transparent);
-  border-radius: 3px;
-  animation: steamRise 3s ease-in-out infinite;
-}
-
-.steam-2 { animation-delay: 1.2s; height: 38px; }
-
-@keyframes steamRise {
-  0% {
-    transform: translateY(10px) scaleY(0.5);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateY(-5px) scaleY(1.1);
-  }
-  100% {
-    transform: translateY(-20px) scaleY(0.3);
-    opacity: 0;
-  }
-}
-
-/* Responsiveness adjustments */
-@media (max-width: 1024px) {
-  .hero-title {
-    font-size: 2.8rem;
-  }
-  
-  .pairing-display-card {
-    padding: 1.5rem;
-  }
-  
-  .jar-img {
-    height: 150px;
-  }
-  
-  .plate-img {
-    height: 140px;
-  }
-  
-  .curved-pointing-arrow {
-    width: 70px;
-    height: 70px;
-  }
-}
-
-@media (max-width: 840px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+/* Mobile responsive styles */
+@media (max-width: 960px) {
+  .hero-culinary-stage {
+    grid-template-columns: 1fr; /* Switch to single stacked column */
+    padding: 3rem 2rem;
     text-align: center;
-    padding-top: 1.5rem;
-  }
-  
-  .hero-content {
-    align-items: center;
   }
 
-  .hero-ctas {
-    justify-content: center;
+  .plate-bleed-container {
+    margin-left: 0;
+    width: 60%;
+    max-width: 320px;
+    margin: 0 auto;
   }
-  
-  .pairing-header {
-    justify-content: center;
-  }
-}
 
-@media (max-width: 500px) {
-  .pairing-display-card {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  .pairing-arrow-col {
+  .curved-pointing-arrow {
     transform: rotate(90deg); /* Arrow points down on mobile */
-    margin: 0.5rem 0;
+    top: auto;
+    bottom: -50px;
+    right: 50%;
+    margin-right: -60px;
   }
   
-  .arrow-caption-text {
-    transform: rotate(-90deg); /* correct text orientation */
+  .hero-jar-container {
+    margin-top: 2rem;
+  }
+
+  .recipe-info-container {
+    padding-left: 0;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .cta-group {
+    justify-content: center;
   }
 }
