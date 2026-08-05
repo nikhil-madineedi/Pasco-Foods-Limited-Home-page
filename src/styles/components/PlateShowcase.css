@@ -1,154 +1,116 @@
-.plate-showcase-section {
-  padding: 2rem 0 6rem 0;
+/* Sticky Viewport Layout Styles */
+.plate-showcase-outer-container {
   position: relative;
+  height: 280vh; /* 2.8x viewport heights of sticky scrolling */
+  background-color: var(--color-white);
 }
 
-/* Row 1: Product shelf */
-.product-shelf-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 4rem;
-}
-
-.shelf-item-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 1.5rem;
-  border-radius: var(--border-radius-lg);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.shelf-item-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--color-saffron-500);
-  box-shadow: var(--shadow-md);
-}
-
-.shelf-item-card.selected {
-  border-color: var(--color-emerald-800);
-  background-color: var(--color-emerald-50);
-  box-shadow: var(--shadow-lg);
-}
-
-.card-heat-tag {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  display: flex;
-  gap: 1px;
-}
-
-.card-flame-icon {
-  color: var(--color-chili-600);
-  fill: var(--color-chili-600);
-}
-
-.card-img-wrapper {
-  height: 140px;
+.plate-showcase-sticky-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  overflow: hidden;
+  padding: 2rem 0;
 }
 
-.card-product-jar {
-  max-height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
-  transition: transform var(--transition-normal);
+.showcase-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
-.shelf-item-card:hover .card-product-jar {
-  transform: scale(1.1);
-}
-
-.card-product-name {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  color: var(--color-emerald-900);
-  margin-bottom: 0.5rem;
-}
-
-.card-product-price {
-  font-family: var(--font-body);
-  font-weight: 700;
-  color: var(--color-saffron-800);
-  font-size: 1.1rem;
-}
-
-.card-weight {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  margin-top: 0.25rem;
-}
-
-/* Row 2: Selected Product Detail Panel */
+/* Detail panel grid */
 .showcase-detail-panel {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 4rem;
-  padding: 3.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  padding: 3rem;
   border-radius: var(--border-radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: var(--gradient-glass);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: var(--shadow-lg);
   align-items: center;
+  min-height: 480px;
 }
 
-/* Left Column visual design */
+/* Left Visual Column */
 .detail-visual-col {
   position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 380px;
+  height: 360px;
+  width: 100%;
 }
 
 .detail-glow {
   position: absolute;
-  width: 280px;
-  height: 280px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   filter: blur(50px);
   z-index: -1;
+  transition: background-color var(--transition-slow);
 }
 
-.plate-3d-wrapper {
-  position: relative;
-  width: 280px;
-  height: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
-  perspective: 600px;
-  z-index: 2;
-}
-
-/* Semi-circular rotational arrows styling */
-.plate-rotational-arrows {
+/* Jar representation on the left side of the visual column */
+.paired-jar-box {
   position: absolute;
-  width: 320px;
-  height: 320px;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-sm);
+  animation: float 5s ease-in-out infinite;
+}
+
+.paired-label {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.paired-jar-image {
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+}
+
+.paired-title {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-emerald-900);
+  margin-top: 0.5rem;
+  max-width: 110px;
+}
+
+/* 3D Rotating Plate container (positioned to the right) */
+.plate-3d-wrapper {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 250px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
-  z-index: 1;
-  transition: transform 0.1s cubic-bezier(0.1, 0.8, 0.3, 1);
-}
-
-.plate-rotational-arrows svg {
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
+  z-index: 4;
 }
 
 .plate-3d-image {
@@ -156,67 +118,44 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--border-radius-round);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
 
-.plate-3d-wrapper.spinning .plate-3d-image {
-  animation: quickPlateSpin 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes quickPlateSpin {
-  0% {
-    transform: rotate(0deg) scale(0.9);
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
-}
-
-/* Orbit background lines */
-.orbit-circle {
+/* Semi-circular rotational SVG arrows (Centered around the plate) */
+.plate-rotational-arrows {
   position: absolute;
-  border: 1px dashed rgba(15, 81, 50, 0.15);
-  border-radius: var(--border-radius-round);
-  pointer-events: none;
-  z-index: -2;
-}
-
-.orbit-1 {
-  width: 320px;
-  height: 320px;
-  animation: spice-rotate 35s linear infinite;
-}
-
-.orbit-2 {
-  width: 380px;
-  height: 380px;
-  animation: spice-rotate 55s linear infinite reverse;
-}
-
-.plate-caption {
-  margin-top: 2rem;
+  right: -0.5rem;
+  top: 50%;
+  margin-top: -145px; /* Half of height (290px) to vertically center */
+  width: 290px;
+  height: 290px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
 }
 
-.chef-icon {
-  color: var(--color-saffron-600);
+.plate-rotational-arrows svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
 }
 
-/* Right Column info design */
+/* Right Column Info styling */
 .detail-info-col {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
 .info-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   width: 100%;
 }
 
@@ -229,7 +168,7 @@
   color: var(--color-saffron-800);
   padding: 0.35rem 0.75rem;
   border-radius: var(--border-radius-sm);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -246,194 +185,175 @@
 .info-meta {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-.info-price {
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: var(--color-saffron-600);
-}
-
-.info-divider {
-  color: var(--color-cream-200);
-}
-
-.info-weight {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-}
-
-.info-heat {
+.meta-item {
   display: flex;
   align-items: center;
-  gap: 2px;
-}
-
-.heat-label {
+  gap: 0.35rem;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-text-secondary);
-  margin-right: 0.25rem;
+  color: var(--color-text-muted);
+}
+
+.meta-div {
+  color: var(--color-cream-200);
 }
 
 .info-description {
   font-family: var(--font-body);
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
 }
 
-/* Tabs Panel Component */
-.info-tabs-wrapper {
+/* Ingredients layout */
+.showcase-ingredients-list {
   width: 100%;
-  margin-bottom: 2.5rem;
-  border: 1px solid rgba(15, 81, 50, 0.08);
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 1.5rem;
 }
 
-.info-tabs-header {
-  display: flex;
-  border-bottom: 1px solid rgba(15, 81, 50, 0.08);
-  background-color: rgba(15, 81, 50, 0.02);
-}
-
-.info-tab-btn {
-  flex: 1;
-  padding: 0.85rem;
+.ingredients-title {
   font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  text-align: center;
-  transition: all var(--transition-fast);
-  border-bottom: 3px solid transparent;
-}
-
-.info-tab-btn:hover {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
   color: var(--color-emerald-800);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
 }
 
-.info-tab-btn.active {
-  color: var(--color-emerald-800);
-  border-bottom-color: var(--color-emerald-800);
-  background-color: var(--color-white);
-}
-
-.info-tab-content {
-  padding: 1.5rem;
-  min-height: 110px;
-}
-
-/* Tab content states */
-.tab-ingredients-list {
+.ingredients-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
-.ingredient-tag {
-  background-color: var(--color-white);
+.ing-tag-pill {
+  background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid var(--color-cream-200);
   color: var(--color-text-primary);
-  padding: 0.4rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
   border-radius: var(--border-radius-sm);
+}
+
+/* Method layout */
+.showcase-method-box {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background-color: rgba(15, 81, 50, 0.02);
+  border-left: 3px solid var(--color-saffron-600);
+  border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+}
+
+.method-title {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-saffron-800);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+
+.method-text {
   font-family: var(--font-body);
   font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.tab-recipe-box {
-  font-family: var(--font-body);
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
-.tab-nutrition-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-
-.nutr-item {
+/* Scroll step dot indicators */
+.scroll-step-indicator {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-color: var(--color-white);
-  padding: 0.6rem;
-  border-radius: var(--border-radius-sm);
-  border: 1px solid var(--color-cream-100);
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
 }
 
-.nutr-val {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--color-emerald-800);
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--border-radius-round);
+  transition: all var(--transition-normal);
 }
 
-.nutr-lbl {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
-  margin-top: 2px;
-}
-
-/* Cart & Action buttons */
-.detail-actions {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-}
-
-.add-cart-btn {
-  flex: 1.5;
-}
-
-.quick-btn {
-  flex: 1;
+.step-dot.active {
+  width: 24px;
+  border-radius: 4px;
 }
 
 /* Responsiveness adjustments */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
+  .plate-showcase-sticky-inner {
+    height: auto;
+    overflow: visible;
+  }
+  
+  .plate-showcase-outer-container {
+    height: auto; /* Dissolve sticky scroll on smaller viewports */
+  }
+  
   .showcase-detail-panel {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
     padding: 2rem;
   }
   
   .detail-visual-col {
-    min-height: auto;
+    height: 320px;
   }
   
-  .orbit-1, .orbit-2 {
-    display: none; /* Hide large orbit circles for cleaner mobile viewport */
+  .paired-jar-box {
+    left: 1rem;
+  }
+  
+  .plate-3d-wrapper {
+    right: 0;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .plate-rotational-arrows {
+    right: -1.5rem;
+    width: 240px;
+    height: 240px;
+    margin-top: -120px;
   }
 }
 
-@media (max-width: 600px) {
-  .product-shelf-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .tab-nutrition-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .detail-actions {
+@media (max-width: 500px) {
+  .detail-visual-col {
+    height: 380px;
     flex-direction: column;
+    justify-content: space-around;
   }
   
-  .info-title {
-    font-size: 1.8rem;
+  .paired-jar-box {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .plate-3d-wrapper {
+    position: relative;
+    top: 0;
+    right: 0;
+    transform: none;
+    width: 160px;
+    height: 160px;
+  }
+  
+  .plate-rotational-arrows {
+    display: none; /* Hide rotation arrows on mobile layout to avoid overlap */
   }
 }
