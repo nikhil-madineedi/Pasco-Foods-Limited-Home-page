@@ -6,9 +6,9 @@ export default function CategoryNav({ activeCategory, setActiveCategory }) {
   // Define categories and calculate product counts dynamically
   const categories = [
     { id: 'all', label: 'All Heritage' },
+    { id: 'cooking-sauces', label: 'Cooking Sauces' },
     { id: 'pickles', label: 'Sun-Cured Pickles' },
-    { id: 'curries', label: 'Kashmiri & Region Curries' },
-    { id: 'pastes-sauces', label: 'Spice Pastes & Sauces' }
+    { id: 'taster-bundles', label: 'Taster Bundles' }
   ];
 
   const getCount = (categoryId) => {
