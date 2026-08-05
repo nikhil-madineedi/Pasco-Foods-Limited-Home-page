@@ -138,3 +138,18 @@ img {
     padding: 4rem 0;
   }
 }
+
+/* Page entrance transition */
+.app-main-layout {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-main-layout.layout-visible {
+  opacity: 1;
+}
+
+.app-main-layout.layout-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
