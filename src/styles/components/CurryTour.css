@@ -1,0 +1,304 @@
+/* Curry Tour Scroll-driven Sticky CSS */
+.curry-tour-outer-container {
+  position: relative;
+  height: 240vh; /* Scroll length for sticky pairings */
+  background-color: var(--color-white);
+}
+
+.curry-tour-sticky-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 2rem 0;
+}
+
+.curry-tour-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+/* Master display panel */
+.curry-tour-panel {
+  display: grid;
+  grid-template-columns: 0.9fr 0.4fr 1.7fr;
+  align-items: center;
+  gap: 2rem;
+  width: 92%;
+  max-width: 1200px;
+  padding: 3rem 2rem 3rem 0; /* no left padding to pull cropped plate to the absolute edge */
+  border-radius: var(--border-radius-xl);
+  background: var(--gradient-glass);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-lg);
+  min-height: 480px;
+  position: relative;
+}
+
+/* Left Column: 50% Cropped Half-Plate sticky spot */
+.tour-left-col {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.plate-wrapper {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  overflow: hidden; /* Crops plate to 50% view */
+  border-radius: 0 160px 160px 0; /* Creates half-circle container bounds */
+  border-right: 4px solid var(--color-saffron-600); /* Highlight cropped rim edge */
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.08);
+  background-color: var(--color-cream-100);
+}
+
+.plate-image {
+  width: 200%; /* Stretch so left half centers at the right boundary */
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  margin-left: -50%; /* offset to display cropped half-circle */
+}
+
+.plate-border-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -2px;
+  width: 2px;
+  background-color: var(--color-saffron-500);
+  z-index: 10;
+}
+
+/* Center Column: Directional SVG Arrow pointing to Jar */
+.tour-center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+
+.pointing-arrow-svg {
+  width: 80px;
+  height: 80px;
+}
+
+.arrow-tag {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-saffron-600);
+  letter-spacing: 1px;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+/* Right Column: Swap Card details */
+.tour-right-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.tour-jar-card {
+  display: grid;
+  grid-template-columns: 1.1fr 1.9fr;
+  gap: 2rem;
+  background-color: var(--color-white);
+  padding: 2.25rem;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(15, 81, 50, 0.06);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+}
+
+.tour-jar-image-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-right: 1px solid rgba(15, 81, 50, 0.08);
+  padding-right: 1.5rem;
+}
+
+.jar-sub-title {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.tour-jar-img {
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.06));
+  margin: 0.5rem 0;
+}
+
+.tour-jar-title {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-emerald-900);
+}
+
+.tour-recipe-info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tour-recipe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--color-cream-200);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.tour-recipe-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--color-emerald-900);
+  margin-bottom: 0.5rem;
+}
+
+.tour-recipe-stats {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.tour-pairing-desc {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.tour-ing-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tour-ing-tag {
+  background-color: var(--color-cream-50);
+  border: 1px solid var(--color-cream-100);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+}
+
+/* Indicators */
+.tour-progress-indicator {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.tour-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--border-radius-round);
+  transition: all var(--transition-normal);
+}
+
+.tour-dot.active {
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 960px) {
+  .curry-tour-outer-container {
+    height: auto; /* dissolve sticky scroll on tablet/mobile */
+  }
+  
+  .curry-tour-sticky-inner {
+    height: auto;
+    overflow: visible;
+    padding: 3rem 0;
+  }
+  
+  .curry-tour-panel {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    width: 95%;
+    gap: 2.5rem;
+  }
+  
+  .tour-left-col {
+    justify-content: center;
+  }
+  
+  .plate-wrapper {
+    border-radius: var(--border-radius-round);
+    border-right: none;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .plate-image {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .plate-border-guide {
+    display: none;
+  }
+  
+  .tour-center-col {
+    transform: rotate(90deg); /* Arrow points down on mobile */
+  }
+}
+
+@media (max-width: 600px) {
+  .tour-jar-card {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .tour-jar-image-box {
+    border-right: none;
+    border-bottom: 1px solid rgba(15, 81, 50, 0.08);
+    padding-right: 0;
+    padding-bottom: 1.25rem;
+  }
+}

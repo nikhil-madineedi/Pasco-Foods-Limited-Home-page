@@ -3,7 +3,7 @@ import Loader from './components/Loader.jsx';
 import Navbar from './components/Navbar.jsx';
 import HeroShowcase from './components/HeroShowcase.jsx';
 import CategoryNav from './components/CategoryNav.jsx';
-import PlateShowcase from './components/PlateShowcase.jsx';
+import CurryTour from './components/CurryTour.jsx';
 import EcoStoryTransform from './components/EcoStoryTransform.jsx';
 import BrandOrigin from './components/BrandOrigin.jsx';
 import RecipesGrid from './components/RecipesGrid.jsx';
@@ -36,8 +36,8 @@ export default function App() {
           setActiveCategory={setActiveCategory} 
         />
 
-        {/* 5. Sticky product card grid & Spinning plates showcase */}
-        <PlateShowcase activeCategory={activeCategory} />
+        {/* 5. Sticky 50% cropped half-plate Curry Tour */}
+        <CurryTour />
 
         {/* 6. Seed-to-Spoon SVG Morph Story */}
         <EcoStoryTransform />
