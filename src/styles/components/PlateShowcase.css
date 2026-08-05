@@ -1,0 +1,419 @@
+.plate-showcase-section {
+  padding: 2rem 0 6rem 0;
+  position: relative;
+}
+
+/* Row 1: Product shelf */
+.product-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.shelf-item-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.shelf-item-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-saffron-500);
+  box-shadow: var(--shadow-md);
+}
+
+.shelf-item-card.selected {
+  border-color: var(--color-emerald-800);
+  background-color: var(--color-emerald-50);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-heat-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 1px;
+}
+
+.card-flame-icon {
+  color: var(--color-chili-600);
+  fill: var(--color-chili-600);
+}
+
+.card-img-wrapper {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.card-product-jar {
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
+  transition: transform var(--transition-normal);
+}
+
+.shelf-item-card:hover .card-product-jar {
+  transform: scale(1.1);
+}
+
+.card-product-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--color-emerald-900);
+  margin-bottom: 0.5rem;
+}
+
+.card-product-price {
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-saffron-800);
+  font-size: 1.1rem;
+}
+
+.card-weight {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Row 2: Selected Product Detail Panel */
+.showcase-detail-panel {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  padding: 3.5rem;
+  border-radius: var(--border-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-lg);
+  align-items: center;
+}
+
+/* Left Column visual design */
+.detail-visual-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.detail-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: -1;
+}
+
+.plate-3d-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  perspective: 600px;
+}
+
+.plate-3d-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius-round);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.plate-3d-wrapper.spinning .plate-3d-image {
+  animation: quickPlateSpin 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes quickPlateSpin {
+  0% {
+    transform: rotate(0deg) scale(0.9);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* Orbit background lines */
+.orbit-circle {
+  position: absolute;
+  border: 1px dashed rgba(15, 81, 50, 0.15);
+  border-radius: var(--border-radius-round);
+  pointer-events: none;
+  z-index: -2;
+}
+
+.orbit-1 {
+  width: 320px;
+  height: 320px;
+  animation: spice-rotate 35s linear infinite;
+}
+
+.orbit-2 {
+  width: 380px;
+  height: 380px;
+  animation: spice-rotate 55s linear infinite reverse;
+}
+
+.plate-caption {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.chef-icon {
+  color: var(--color-saffron-600);
+}
+
+/* Right Column info design */
+.detail-info-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.info-header {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.info-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--color-saffron-50);
+  border: 1px solid var(--color-saffron-100);
+  color: var(--color-saffron-800);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.info-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--color-emerald-900);
+  margin-bottom: 0.5rem;
+}
+
+.info-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.info-price {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--color-saffron-600);
+}
+
+.info-divider {
+  color: var(--color-cream-200);
+}
+
+.info-weight {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.info-heat {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.heat-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-right: 0.25rem;
+}
+
+.info-description {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1.05rem;
+}
+
+/* Tabs Panel Component */
+.info-tabs-wrapper {
+  width: 100%;
+  margin-bottom: 2.5rem;
+  border: 1px solid rgba(15, 81, 50, 0.08);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.info-tabs-header {
+  display: flex;
+  border-bottom: 1px solid rgba(15, 81, 50, 0.08);
+  background-color: rgba(15, 81, 50, 0.02);
+}
+
+.info-tab-btn {
+  flex: 1;
+  padding: 0.85rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  transition: all var(--transition-fast);
+  border-bottom: 3px solid transparent;
+}
+
+.info-tab-btn:hover {
+  color: var(--color-emerald-800);
+}
+
+.info-tab-btn.active {
+  color: var(--color-emerald-800);
+  border-bottom-color: var(--color-emerald-800);
+  background-color: var(--color-white);
+}
+
+.info-tab-content {
+  padding: 1.5rem;
+  min-height: 110px;
+}
+
+/* Tab content states */
+.tab-ingredients-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ingredient-tag {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-cream-200);
+  color: var(--color-text-primary);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tab-recipe-box {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.tab-nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.nutr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-white);
+  padding: 0.6rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-cream-100);
+}
+
+.nutr-val {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-emerald-800);
+}
+
+.nutr-lbl {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* Cart & Action buttons */
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.add-cart-btn {
+  flex: 1.5;
+}
+
+.quick-btn {
+  flex: 1;
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 1024px) {
+  .showcase-detail-panel {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 2rem;
+  }
+  
+  .detail-visual-col {
+    min-height: auto;
+  }
+  
+  .orbit-1, .orbit-2 {
+    display: none; /* Hide large orbit circles for cleaner mobile viewport */
+  }
+}
+
+@media (max-width: 600px) {
+  .product-shelf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .tab-nutrition-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .detail-actions {
+    flex-direction: column;
+  }
+  
+  .info-title {
+    font-size: 1.8rem;
+  }
+}
