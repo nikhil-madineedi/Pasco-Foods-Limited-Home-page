@@ -1,7 +1,7 @@
-/* Curry Tour Scroll-driven Sticky CSS */
+/* Curry Tour Reconstructed Layout Styles */
 .curry-tour-outer-container {
   position: relative;
-  height: 240vh; /* Scroll length for sticky pairings */
+  height: 240vh; /* Scroll path for sticky pinning */
   background-color: var(--color-white);
 }
 
@@ -19,214 +19,160 @@
 
 .curry-tour-header {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
-/* Master display panel */
-.curry-tour-panel {
+/* 3-Column Pairing Tour Container */
+.pairing-tour-container {
   display: grid;
-  grid-template-columns: 0.9fr 0.4fr 1.7fr;
+  grid-template-columns: 1.2fr 1fr 1.5fr; /* Plate | Jar | Info */
   align-items: center;
-  gap: 2rem;
+  position: relative;
   width: 92%;
-  max-width: 1200px;
-  padding: 3rem 2rem 3rem 0; /* no left padding to pull cropped plate to the absolute edge */
-  border-radius: var(--border-radius-xl);
-  background: var(--gradient-glass);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: var(--shadow-lg);
-  min-height: 480px;
-  position: relative;
-}
-
-/* Left Column: 50% Cropped Half-Plate sticky spot */
-.tour-left-col {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
-}
-
-.plate-wrapper {
-  position: relative;
-  width: 320px;
-  height: 320px;
-  overflow: hidden; /* Crops plate to 50% view */
-  border-radius: 0 160px 160px 0; /* Creates half-circle container bounds */
-  border-right: 4px solid var(--color-saffron-600); /* Highlight cropped rim edge */
-  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.08);
-  background-color: var(--color-cream-100);
-}
-
-.plate-image {
-  width: 200%; /* Stretch so left half centers at the right boundary */
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  transform-origin: 50% 50%;
-  will-change: transform;
-  margin-left: -50%; /* offset to display cropped half-circle */
-}
-
-.plate-border-guide {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -2px;
-  width: 2px;
-  background-color: var(--color-saffron-500);
-  z-index: 10;
-}
-
-/* Center Column: Directional SVG Arrow pointing to Jar */
-.tour-center-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 5;
-}
-
-.pointing-arrow-svg {
-  width: 80px;
-  height: 80px;
-}
-
-.arrow-tag {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--color-saffron-600);
-  letter-spacing: 1px;
-  margin-top: 0.25rem;
-  text-align: center;
-}
-
-/* Right Column: Swap Card details */
-.tour-right-col {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.tour-jar-card {
-  display: grid;
-  grid-template-columns: 1.1fr 1.9fr;
-  gap: 2rem;
-  background-color: var(--color-white);
-  padding: 2.25rem;
-  border-radius: var(--border-radius-lg);
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: var(--color-cream-50);
+  border-radius: 24px;
   border: 1px solid rgba(15, 81, 50, 0.06);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  min-height: 480px;
+}
+
+/* Column 1: 50% Bleeding Half-Plate on Left Edge */
+.plate-bleed-wrapper {
+  position: relative;
+  margin-left: -35%; /* Pulls plate off the left container edge to crop at 50% */
+  width: 140%;
+  aspect-ratio: 1 / 1;
+}
+
+.rotating-half-plate {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  /* Binds rotation to scroll progression */
+  transform: rotate(calc(var(--scroll-progress, 0) * 360deg));
+  transition: transform 0.1s linear;
+  box-shadow: 12px 0 24px rgba(0,0,0,0.12);
 }
 
-.tour-jar-image-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border-right: 1px solid rgba(15, 81, 50, 0.08);
-  padding-right: 1.5rem;
-}
-
-.jar-sub-title {
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  letter-spacing: 1px;
-  margin-bottom: 0.5rem;
-}
-
-.tour-jar-img {
+/* Curved Arrow pointing from Plate to Jar */
+.curved-arrow-svg {
+  position: absolute;
+  top: 15%;
+  right: -10%;
+  width: 120px;
   height: 120px;
+  pointer-events: none;
+}
+
+/* Column 2: Large Center Jar */
+.center-jar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.hero-jar-image {
+  max-height: 380px;
+  width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.06));
-  margin: 0.5rem 0;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+  transition: transform 0.3s ease;
+  animation: float 6s ease-in-out infinite;
 }
 
-.tour-jar-title {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color-emerald-900);
-}
-
-.tour-recipe-info-box {
+/* Column 3: Recipe Text Section */
+.recipe-details-wrapper {
+  padding-left: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  animation: fadeInUp 0.4s ease-out forwards;
 }
 
-.tour-recipe-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: 1px solid var(--color-cream-200);
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--border-radius-sm);
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-
-.tour-recipe-title {
+.recipe-details-wrapper h2 {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
+  font-size: 2.8rem;
   color: var(--color-emerald-900);
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 1rem 0;
+  line-height: 1.15;
 }
 
-.tour-recipe-stats {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.stat-pill {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  font-weight: 600;
-}
-
-.tour-pairing-desc {
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  margin-bottom: 1rem;
-}
-
-.tour-ing-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.tour-ing-tag {
-  background-color: var(--color-cream-50);
-  border: 1px solid var(--color-cream-100);
-  color: var(--color-text-primary);
+.badge-pill {
+  display: inline-block;
+  background-color: var(--color-saffron-50);
+  border: 1px solid var(--color-saffron-100);
+  color: var(--color-saffron-800);
   font-family: var(--font-body);
   font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pairing-tour-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Metadata Row */
+.meta-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.meta-stats span {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+/* Spices Tags List */
+.spices-tag-list {
+  width: 100%;
+}
+
+.spices-tag-list h4 {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-emerald-800);
+  margin-bottom: 0.6rem;
+  letter-spacing: 1px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.spice-tag {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-cream-200);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.25rem 0.5rem;
+  padding: 0.35rem 0.75rem;
   border-radius: var(--border-radius-sm);
 }
 
-/* Indicators */
+/* Dot indicators at the bottom */
 .tour-progress-indicator {
   display: flex;
   gap: 0.75rem;
@@ -245,10 +191,20 @@
   border-radius: 4px;
 }
 
-/* Responsive Overrides */
+/* Responsive Grid overrides */
+@media (max-width: 1024px) {
+  .recipe-details-wrapper h2 {
+    font-size: 2.2rem;
+  }
+  
+  .hero-jar-image {
+    max-height: 300px;
+  }
+}
+
 @media (max-width: 960px) {
   .curry-tour-outer-container {
-    height: auto; /* dissolve sticky scroll on tablet/mobile */
+    height: auto; /* Dissolve sticky scroll on smaller screens */
   }
   
   .curry-tour-sticky-inner {
@@ -256,49 +212,39 @@
     overflow: visible;
     padding: 3rem 0;
   }
-  
-  .curry-tour-panel {
-    grid-template-columns: 1fr;
-    padding: 2rem;
-    width: 95%;
-    gap: 2.5rem;
+
+  .pairing-tour-container {
+    grid-template-columns: 1fr; /* Switch to stacked layout */
+    padding: 3rem 2rem;
+    gap: 3rem;
+  }
+
+  .plate-bleed-wrapper {
+    margin-left: 0;
+    width: 60%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .curved-arrow-svg {
+    transform: rotate(90deg); /* Arrow points downwards on mobile */
+    top: auto;
+    bottom: -60px;
+    right: 50%;
+    margin-right: -60px;
+  }
+
+  .recipe-details-wrapper {
+    padding-left: 0;
+    align-items: center;
+    text-align: center;
   }
   
-  .tour-left-col {
+  .meta-stats {
     justify-content: center;
   }
   
-  .plate-wrapper {
-    border-radius: var(--border-radius-round);
-    border-right: none;
-    box-shadow: var(--shadow-md);
-  }
-  
-  .plate-image {
-    width: 100%;
-    margin-left: 0;
-  }
-  
-  .plate-border-guide {
-    display: none;
-  }
-  
-  .tour-center-col {
-    transform: rotate(90deg); /* Arrow points down on mobile */
-  }
-}
-
-@media (max-width: 600px) {
-  .tour-jar-card {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.5rem;
-  }
-  
-  .tour-jar-image-box {
-    border-right: none;
-    border-bottom: 1px solid rgba(15, 81, 50, 0.08);
-    padding-right: 0;
-    padding-bottom: 1.25rem;
+  .tags {
+    justify-content: center;
   }
 }

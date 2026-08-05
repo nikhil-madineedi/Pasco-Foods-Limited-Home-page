@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { recipes } from '../data/pascoProducts';
-import { Clock, ChefHat, Sparkles } from 'lucide-react';
 import '../styles/components/CurryTour.css';
 
 export default function CurryTour() {
@@ -37,128 +36,122 @@ export default function CurryTour() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Pairing configurations matching authentic products
+  // Set up configuration matching the authentic data mappings
   const pairings = [
     {
-      recipe: recipes[0], // Hyderabadi Biryani
-      jarName: 'Delhi Tikka Masala Cooking Sauce',
-      jarImage: '/src/assets/tikka_masala_jar.jpg',
-      plateImage: '/src/assets/plated_tikka_masala.jpg',
+      id: 'tikka-masala',
+      dishName: recipes[0].name, // Hyderabadi Biryani
+      jarName: 'Delhi Tikka Masala Sauce',
+      jarImg: '/src/assets/tikka_masala_jar.jpg',
+      plateImg: '/src/assets/plated_tikka_masala.jpg',
       accentColor: '#0F5132',
-      pairingText: 'A rich, medium-spiced Delhi Tikka Masala gravy base cooked slowly with marinated lamb and fragrant saffron rice.'
+      description: 'A rich, medium-spiced Delhi Tikka Masala gravy base cooked slowly with marinated lamb and fragrant saffron rice.',
+      prepTime: recipes[0].prepTime,
+      difficulty: recipes[0].difficulty,
+      servings: '4 Servings',
+      spices: ['Coriander', 'Cumin', 'Turmeric', 'Garam Masala']
     },
     {
-      recipe: recipes[2], // Methi Chicken
+      id: 'mango-pickle',
+      dishName: recipes[2].name, // Methi Chicken
       jarName: 'Mango Pickle (Hot)',
-      jarImage: '/src/assets/mango_pickle_jar.jpg',
-      plateImage: '/src/assets/plated_tikka_masala.jpg', // reusable asset
+      jarImg: '/src/assets/mango_pickle_jar.jpg',
+      plateImg: '/src/assets/plated_tikka_masala.jpg',
       accentColor: '#D97706',
-      pairingText: 'Fiery matured green mango pickle chunks served on the side to spice up dry Methi chicken fries and poppadoms.'
+      description: 'Fiery matured green mango pickle chunks served on the side to spice up dry Methi chicken curry and crispy poppadoms.',
+      prepTime: recipes[2].prepTime,
+      difficulty: recipes[2].difficulty,
+      servings: '3 Servings',
+      spices: ['Fenugreek', 'Mustard Seeds', 'Fennel', 'Red Chili']
     },
     {
-      recipe: recipes[3], // Lamb Bhuna Gosht
+      id: 'butter-chicken',
+      dishName: recipes[3].name, // Lamb Bhuna Gosht
       jarName: 'Punjabi Butter Chicken Sauce',
-      jarImage: '/src/assets/korma_sauce_jar.jpg',
-      plateImage: '/src/assets/plated_tikka_masala.jpg',
+      jarImg: '/src/assets/korma_sauce_jar.jpg',
+      plateImg: '/src/assets/plated_tikka_masala.jpg',
       accentColor: '#B91C1C',
-      pairingText: 'Traditional slow-fried lamb bhuna seasoned with fenugreek and butter sauces for an aromatic finish.'
+      description: 'Traditional slow-fried lamb bhuna seasoned with fenugreek and butter sauces for a highly rich, aromatic finish.',
+      prepTime: recipes[3].prepTime,
+      difficulty: recipes[3].difficulty,
+      servings: '2-4 Servings',
+      spices: ['Cardamom', 'Cinnamon', 'Cloves', 'Kashmiri Chili']
     }
   ];
 
   // Calculate active index (0, 1, or 2)
   const activeIdx = Math.min(Math.floor(scrollProgress * 3), 2);
-  const activePairing = pairings[activeIdx];
-
-  // Continuous rotation calculated relative to scroll progress
-  const rotationAngle = scrollProgress * 360;
+  const currentPairing = pairings[activeIdx];
 
   return (
     <div ref={sectionRef} className="curry-tour-outer-container">
       
-      {/* Sticky Viewport Panel */}
+      {/* Sticky viewport frame container */}
       <div className="curry-tour-sticky-inner">
-        
-        {/* Page Titles */}
         <div className="curry-tour-header">
-          <span className="section-tagline">Scroll Pairing Tour</span>
+          <span className="section-tagline font-bold">Scroll Pairing Tour</span>
           <h2 className="section-title">Sauce & Plate Mechanics</h2>
         </div>
 
-        {/* Dynamic Display Panel */}
-        <div className="curry-tour-panel glass-panel">
-          
-          {/* Left Area: 50% Cropped Half-Plate */}
-          <div className="tour-left-col">
-            <div className="plate-wrapper">
-              <img 
-                src={activePairing.plateImage} 
-                alt={activePairing.recipe.name} 
-                className="plate-image"
-                style={{ transform: `rotate(${rotationAngle}deg)` }}
-              />
-            </div>
-            {/* Visual crop overlay line */}
-            <div className="plate-border-guide"></div>
-          </div>
-
-          {/* Center Area: Directional SVG Arrow pointing from half-plate to Jar */}
-          <div className="tour-center-col">
-            <svg className="pointing-arrow-svg animate-float-arrow" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Arrow Line curving left-to-right (pointing from plate to jar) */}
-              <path d="M 10 50 Q 50 15 90 45" stroke="var(--color-saffron-600)" strokeWidth="3.5" strokeLinecap="round" fill="none" strokeDasharray="5 5" />
-              {/* Arrow Head */}
-              <path d="M 80 45 L 90 45 L 86 35" stroke="var(--color-saffron-600)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        {/* Reconstructed Pairing Grid Layout */}
+        <section 
+          className="pairing-tour-container"
+          style={{ '--scroll-progress': scrollProgress }}
+        >
+          {/* Column 1: Bleeding 50% Half-Plate */}
+          <div className="plate-bleed-wrapper">
+            <img 
+              src={currentPairing.plateImg} 
+              alt={currentPairing.dishName} 
+              className="rotating-half-plate" 
+            />
+            
+            {/* Dynamic pointed arrow curving left-to-right (plate -> jar) */}
+            <svg className="curved-arrow-svg" viewBox="0 0 100 100">
+              <path d="M10,20 Q50,5 90,40" fill="none" stroke="#d97706" strokeWidth="3.5" strokeLinecap="round" strokeDasharray="5,5" />
+              <polygon points="85,35 95,45 82,50" fill="#d97706" />
             </svg>
-            <span className="arrow-tag">Enhances</span>
           </div>
 
-          {/* Right Area: Dynamic Product Jar Card and Recipe Details */}
-          <div className="tour-right-col" key={`jar-${activeIdx}`}>
-            <div className="tour-jar-card">
-              
-              {/* Jar Visual */}
-              <div className="tour-jar-image-box">
-                <span className="jar-sub-title">Pasco Sourcing</span>
-                <img src={activePairing.jarImage} alt={activePairing.jarName} className="tour-jar-img animate-float" />
-                <h4 className="tour-jar-title">{activePairing.jarName}</h4>
+          {/* Column 2: Prominent Center Jar */}
+          <div className="center-jar-wrapper" key={`jar-${activeIdx}`}>
+            <img 
+              src={currentPairing.jarImg} 
+              alt={currentPairing.jarName} 
+              className="hero-jar-image" 
+            />
+          </div>
+
+          {/* Column 3: Recipe & Dish Details */}
+          <div className="recipe-details-wrapper" key={`info-${activeIdx}`}>
+            <span className="badge-pill">AUTHENTIC RECIPE</span>
+            <h2>{currentPairing.dishName}</h2>
+            <p className="pairing-tour-desc">{currentPairing.description}</p>
+            
+            <div className="meta-stats">
+              <span>⏱️ {currentPairing.prepTime}</span>
+              <span>📊 {currentPairing.difficulty}</span>
+              <span>👥 {currentPairing.servings}</span>
+            </div>
+
+            <div className="spices-tag-list">
+              <h4>SPICES USED</h4>
+              <div className="tags">
+                {currentPairing.spices.map((spice, idx) => (
+                  <span key={idx} className="spice-tag">{spice}</span>
+                ))}
               </div>
-
-              {/* Recipe Info */}
-              <div className="tour-recipe-info-box">
-                <div className="tour-recipe-badge" style={{ borderColor: activePairing.accentColor, color: activePairing.accentColor }}>
-                  <Sparkles size={12} />
-                  <span>{activePairing.recipe.meatType}</span>
-                </div>
-                
-                <h3 className="tour-recipe-title">{activePairing.recipe.name}</h3>
-                
-                <div className="tour-recipe-stats">
-                  <div className="stat-pill"><Clock size={12} /> <span>{activePairing.recipe.prepTime}</span></div>
-                  <div className="stat-pill"><ChefHat size={12} /> <span>{activePairing.recipe.difficulty}</span></div>
-                </div>
-
-                <p className="tour-pairing-desc">{activePairing.pairingText}</p>
-
-                {/* Recipe ingredients */}
-                <div className="tour-ing-list">
-                  {activePairing.recipe.ingredients.slice(0, 4).map((ing, idx) => (
-                    <span key={idx} className="tour-ing-tag">{ing}</span>
-                  ))}
-                </div>
-              </div>
-
             </div>
           </div>
+        </section>
 
-        </div>
-
-        {/* Step dot indicator */}
+        {/* Slide Indicator Dots */}
         <div className="tour-progress-indicator">
           {pairings.map((_, idx) => (
             <div 
               key={idx} 
               className={`tour-dot ${activeIdx === idx ? 'active' : ''}`}
-              style={{ backgroundColor: activeIdx === idx ? activePairing.accentColor : 'var(--color-cream-200)' }}
+              style={{ backgroundColor: activeIdx === idx ? currentPairing.accentColor : 'var(--color-cream-200)' }}
             ></div>
           ))}
         </div>
