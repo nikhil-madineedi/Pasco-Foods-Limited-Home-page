@@ -1,182 +1,158 @@
-import React, { useState, useRef } from 'react';
-import { Sparkles, Flame, Check, MoveRight, HelpCircle } from 'lucide-react';
-import useScrollProgress from '../hooks/useScrollProgress.js';
+import React, { useState } from 'react';
+import { Sparkles, Check, MoveRight, Phone, Mail } from 'lucide-react';
 import '../styles/components/HeroShowcase.css';
 
 export default function HeroShowcase() {
-  const [isTransformed, setIsTransformed] = useState(false);
-  const showcaseRef = useRef(null);
-  
-  // Track scroll position
-  const { scrollY } = useScrollProgress();
-  
-  // Factor from 0 to 1 based on scroll height (completed by 250px of scroll)
-  const scrollFactor = Math.min(scrollY / 250, 1);
+  // Define 3 signature pairing pairs based on authentic Pasco products
+  const pairings = [
+    {
+      id: 'tikka-masala',
+      jarName: 'Delhi Tikka Masala',
+      jarImage: '/src/assets/tikka_masala_jar.jpg',
+      dishName: 'Chicken Tikka Masala & Naan',
+      dishImage: '/src/assets/plated_tikka_masala.jpg',
+      description: 'Our flagship medium sauce: a ground coriander, cumin, tomato, and cream blend pairing perfectly with roasted paneer or chicken.',
+      tag: 'Medium Heat'
+    },
+    {
+      id: 'mango-pickle',
+      jarName: 'Mango Pickle (Hot)',
+      jarImage: '/src/assets/mango_pickle_jar.jpg',
+      dishName: 'Crispy Samosas & Poppadoms',
+      dishImage: '/src/assets/plated_tikka_masala.jpg', // reusable for flat pair layout
+      description: 'Fiery chunks of raw green mango cured in mustard oil and red chilies. Adds a punchy heat to crispy snacks and appetizers.',
+      tag: 'Hot Spice'
+    },
+    {
+      id: 'butter-chicken',
+      jarName: 'Punjabi Butter Chicken',
+      jarImage: '/src/assets/korma_sauce_jar.jpg',
+      dishName: 'Creamy Butter Chicken & Rice',
+      dishImage: '/src/assets/plated_tikka_masala.jpg',
+      description: 'A mild, slow-cooked buttery tomato gravy infused with fenugreek leaves. Perfect for a rich, family-friendly dinner.',
+      tag: 'Mild Heat'
+    }
+  ];
 
-  // Mouse move 3D tilt effect on the card container
-  const handleMouseMove = (e) => {
-    if (!showcaseRef.current) return;
-    const el = showcaseRef.current;
-    const rect = el.getBoundingClientRect();
-    
-    // Relative coordinates from center of card (-1 to 1)
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    // Apply rotation angles as CSS variables
-    el.style.setProperty('--rx', `${-y * 20}deg`);
-    el.style.setProperty('--ry', `${x * 20}deg`);
-  };
-
-  const handleMouseLeave = () => {
-    if (!showcaseRef.current) return;
-    const el = showcaseRef.current;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
-  };
-
-  // Determine active transformation state (either manually clicked or scrolled down)
-  const isCurrentlyTransformed = isTransformed || scrollFactor > 0.5;
-  const currentScrollAngle = scrollFactor * 15; // 0 to 15 degree right tilt
-
-  // Combined rotation Y calculation
-  const rotateYStyle = `calc(var(--ry, 0deg) + ${currentScrollAngle}deg + ${isCurrentlyTransformed ? '180deg' : '0deg'})`;
-  const rotateXStyle = `var(--rx, 0deg)`;
+  const [activeIdx, setActiveIdx] = useState(0);
+  const activePairing = pairings[activeIdx];
 
   return (
     <section id="hero" className="hero-section">
+      
+      {/* Factory Notice Bar */}
+      <div className="factory-notice-bar">
+        <div className="container notice-flex">
+          <span className="notice-tag">Factory Shop:</span>
+          <span className="notice-text">FREE order collection from our factory shop: <strong>sales@pascofoods.com</strong> | <strong>01942 493220</strong></span>
+        </div>
+      </div>
+
       <div className="hero-container container">
         
-        {/* Left Column: Brand Pitch */}
+        {/* Left Column: Brand Pitch using authentic 1990 copy */}
         <div className="hero-content">
           <div className="hero-badge animate-fade-in-up">
             <Sparkles size={16} className="badge-icon" />
-            <span>ESTD. 1975 — AUTHENTIC HERITAGE</span>
+            <span>AUTHENTIC FLAVOURS SINCE 1990</span>
           </div>
           
           <h1 className="hero-title animate-fade-in-up">
-            Secret Spice Pastes, <br />
-            <span className="accent-text">Plated in Minutes.</span>
+            Authentic Taste, <br />
+            <span className="accent-text">Professional Heritage.</span>
           </h1>
           
           <p className="hero-subtitle animate-fade-in-up">
-            Experience the culinary artistry of slow-cooked Indian curries. Our gourmet pastes pack decades of generational heritage, sourced organically and ready for headless checkouts.
+            Authentic taste trusted by professional kitchens across the UK. Now available for your home. Made in the UK using the finest blends of spices and herbs from around the world.
           </p>
 
           <div className="hero-features animate-fade-in-up">
             <div className="hero-feat-item">
               <div className="feat-check"><Check size={14} /></div>
-              <span>No Preservatives</span>
+              <span>Award-Winning Sauces</span>
             </div>
             <div className="hero-feat-item">
               <div className="feat-check"><Check size={14} /></div>
-              <span>Stone-Ground Spices</span>
+              <span>Created in our Family Kitchen</span>
             </div>
             <div className="hero-feat-item">
               <div className="feat-check"><Check size={14} /></div>
-              <span>100% Organic Farms</span>
+              <span>Natural Ingredients for 30+ Years</span>
             </div>
           </div>
 
           <div className="hero-ctas animate-fade-in-up">
-            <a href="#plate-showcase" className="btn btn-primary">
-              <span>Explore Flavors</span>
+            <a href="#recipes" className="btn btn-primary">
+              <span>View Kitchen Recipes</span>
               <MoveRight size={18} />
             </a>
-            
-            {/* Interactive Toggle for the visual Showcase */}
-            <button 
-              className={`btn btn-secondary simmer-btn ${isCurrentlyTransformed ? 'active' : ''}`}
-              onClick={() => setIsTransformed(!isTransformed)}
-            >
-              <Flame size={18} className="flame-icon" />
-              <span>{isCurrentlyTransformed ? 'Reset to Jar' : 'Simmer & Plate!'}</span>
-            </button>
+            <a href="#heritage" className="btn btn-outline">
+              <span>Read Our Story</span>
+            </a>
           </div>
         </div>
 
-        {/* Right Column: 3D Interactive Transformation Showcase */}
-        <div className="hero-visual-wrapper">
-          <div className="visual-background-glow"></div>
-          
-          {/* Scroll morph wrapper */}
-          <div 
-            ref={showcaseRef}
-            className={`hero-showcase-box transform-3d ${isCurrentlyTransformed ? 'transformed' : ''}`}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-              transform: `rotateX(${rotateXStyle}) rotateY(${rotateYStyle})`
-            }}
-          >
-            {/* Front Layer: Raw product jar */}
-            <div 
-              className="showcase-layer jar-layer backface-hidden"
-              style={{
-                opacity: isCurrentlyTransformed ? 0 : 1 - scrollFactor,
-                transform: `scale(${1 - scrollFactor * 0.1})`
-              }}
-            >
-              <div className="floating-badge shadow-md">
-                <span className="badge-title">Tikka Masala</span>
-                <div className="badge-spice-level">
-                  <Flame size={12} className="filled-flame" />
-                  <Flame size={12} className="filled-flame" />
-                  <Flame size={12} className="empty-flame" />
-                </div>
-              </div>
+        {/* Right Column: Flat Product-to-Plate Pairing Showcase */}
+        <div className="hero-pairing-wrapper">
+          <div className="pairing-header">
+            <h3 className="pairing-section-title">Perfect Pairings</h3>
+            <div className="pairing-selector-tabs">
+              {pairings.map((p, idx) => (
+                <button
+                  key={p.id}
+                  className={`pairing-tab-btn ${activeIdx === idx ? 'active' : ''}`}
+                  onClick={() => setActiveIdx(idx)}
+                >
+                  {p.jarName.split(' ')[0]} {/* first word only */}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Interactive Flat Display */}
+          <div className="pairing-display-card glass-panel">
+            
+            {/* 1. Left side: The Product Jar */}
+            <div className="pairing-col jar-col" key={`jar-${activeIdx}`}>
+              <span className="pairing-lbl">Pasco Product</span>
+              <div className="pairing-badge-heat">{activePairing.tag}</div>
               <img 
-                src="/src/assets/tikka_masala_jar.jpg" 
-                alt="Pasco Tikka Masala Paste Jar" 
-                className="showcase-image product-jar"
+                src={activePairing.jarImage} 
+                alt={activePairing.jarName} 
+                className="pairing-image jar-img"
               />
-              <div className="product-shadow"></div>
+              <h4 className="pairing-item-title">{activePairing.jarName}</h4>
             </div>
 
-            {/* Back Layer: Finished culinary creation */}
-            <div 
-              className="showcase-layer dish-layer backface-hidden"
-              style={{
-                opacity: isCurrentlyTransformed ? 1 : scrollFactor,
-                transform: `rotateY(180deg) scale(${0.9 + scrollFactor * 0.1})`
-              }}
-            >
-              <div className="floating-badge shadow-md green-theme">
-                <span className="badge-title">Plated Dish</span>
-                <span className="badge-subtitle">15 Mins Prep</span>
-              </div>
-              
-              {/* Decorative steam effect lines */}
+            {/* 2. Center: Curved SVG Pointing Arrow */}
+            <div className="pairing-arrow-col">
+              <svg className="curved-pointing-arrow" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Curved connecting line */}
+                <path d="M 10 30 Q 50 5 90 40" stroke="var(--color-saffron-600)" strokeWidth="3" strokeLinecap="round" fill="none" />
+                {/* Arrow Head */}
+                <path d="M 80 40 L 90 40 L 90 30" stroke="var(--color-saffron-600)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </svg>
+              <span className="arrow-caption-text">Brings to life</span>
+            </div>
+
+            {/* 3. Right side: The Paired Half-Plate */}
+            <div className="pairing-col plate-col" key={`plate-${activeIdx}`}>
+              <span className="pairing-lbl">Plated Dish</span>
               <div className="steam-wrapper">
                 <span className="steam-line steam-1"></span>
                 <span className="steam-line steam-2"></span>
-                <span className="steam-line steam-3"></span>
               </div>
-              
               <img 
-                src="/src/assets/plated_tikka_masala.jpg" 
-                alt="Plated Chicken Tikka Masala Curry" 
-                className="showcase-image plated-dish"
+                src={activePairing.dishImage} 
+                alt={activePairing.dishName} 
+                className="pairing-image plate-img"
               />
-              <div className="product-shadow plate-shadow"></div>
+              <h4 className="pairing-item-title">{activePairing.dishName}</h4>
             </div>
 
-            {/* Glassmorphic instruction tab */}
-            <div className="showcase-hint glass-panel">
-              <HelpCircle size={14} />
-              <span>{isCurrentlyTransformed ? 'Hover to tilt dish' : 'Hover to tilt jar | Scroll to Cook'}</span>
-            </div>
           </div>
 
-          {/* Floating Curved SVG Directional Arrow Guide */}
-          <div className="hero-scroll-guide animate-float-arrow">
-            <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 20 Q50 5 65 40 T50 80" stroke="var(--color-saffron-600)" strokeWidth="3" strokeLinecap="round" fill="none" strokeDasharray="4 4" />
-              <path d="M40 70 L50 80 L62 72" stroke="var(--color-saffron-600)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            </svg>
-            <span className="scroll-guide-label">Scroll to Plate</span>
-          </div>
-
+          <p className="pairing-desc-caption">{activePairing.description}</p>
         </div>
 
       </div>
