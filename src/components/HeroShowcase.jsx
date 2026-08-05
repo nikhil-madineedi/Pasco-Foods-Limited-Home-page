@@ -1,10 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { Sparkles, Flame, Check, MoveRight, HelpCircle } from 'lucide-react';
+import useScrollProgress from '../hooks/useScrollProgress.js';
 import '../styles/components/HeroShowcase.css';
 
 export default function HeroShowcase() {
   const [isTransformed, setIsTransformed] = useState(false);
   const showcaseRef = useRef(null);
+  
+  // Track scroll position
+  const { scrollY } = useScrollProgress();
+  
+  // Factor from 0 to 1 based on scroll height (completed by 250px of scroll)
+  const scrollFactor = Math.min(scrollY / 250, 1);
 
   // Mouse move 3D tilt effect on the card container
   const handleMouseMove = (e) => {
@@ -27,6 +34,14 @@ export default function HeroShowcase() {
     el.style.setProperty('--rx', '0deg');
     el.style.setProperty('--ry', '0deg');
   };
+
+  // Determine active transformation state (either manually clicked or scrolled down)
+  const isCurrentlyTransformed = isTransformed || scrollFactor > 0.5;
+  const currentScrollAngle = scrollFactor * 15; // 0 to 15 degree right tilt
+
+  // Combined rotation Y calculation
+  const rotateYStyle = `calc(var(--ry, 0deg) + ${currentScrollAngle}deg + ${isCurrentlyTransformed ? '180deg' : '0deg'})`;
+  const rotateXStyle = `var(--rx, 0deg)`;
 
   return (
     <section id="hero" className="hero-section">
@@ -71,11 +86,11 @@ export default function HeroShowcase() {
             
             {/* Interactive Toggle for the visual Showcase */}
             <button 
-              className={`btn btn-secondary simmer-btn ${isTransformed ? 'active' : ''}`}
+              className={`btn btn-secondary simmer-btn ${isCurrentlyTransformed ? 'active' : ''}`}
               onClick={() => setIsTransformed(!isTransformed)}
             >
               <Flame size={18} className="flame-icon" />
-              <span>{isTransformed ? 'Reset to Jar' : 'Simmer & Plate!'}</span>
+              <span>{isCurrentlyTransformed ? 'Reset to Jar' : 'Simmer & Plate!'}</span>
             </button>
           </div>
         </div>
@@ -84,14 +99,24 @@ export default function HeroShowcase() {
         <div className="hero-visual-wrapper">
           <div className="visual-background-glow"></div>
           
+          {/* Scroll morph wrapper */}
           <div 
             ref={showcaseRef}
-            className={`hero-showcase-box transform-3d ${isTransformed ? 'transformed' : ''}`}
+            className={`hero-showcase-box transform-3d ${isCurrentlyTransformed ? 'transformed' : ''}`}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            style={{
+              transform: `rotateX(${rotateXStyle}) rotateY(${rotateYStyle})`
+            }}
           >
             {/* Front Layer: Raw product jar */}
-            <div className="showcase-layer jar-layer backface-hidden">
+            <div 
+              className="showcase-layer jar-layer backface-hidden"
+              style={{
+                opacity: isCurrentlyTransformed ? 0 : 1 - scrollFactor,
+                transform: `scale(${1 - scrollFactor * 0.1})`
+              }}
+            >
               <div className="floating-badge shadow-md">
                 <span className="badge-title">Tikka Masala</span>
                 <div className="badge-spice-level">
@@ -109,7 +134,13 @@ export default function HeroShowcase() {
             </div>
 
             {/* Back Layer: Finished culinary creation */}
-            <div className="showcase-layer dish-layer backface-hidden">
+            <div 
+              className="showcase-layer dish-layer backface-hidden"
+              style={{
+                opacity: isCurrentlyTransformed ? 1 : scrollFactor,
+                transform: `rotateY(180deg) scale(${0.9 + scrollFactor * 0.1})`
+              }}
+            >
               <div className="floating-badge shadow-md green-theme">
                 <span className="badge-title">Plated Dish</span>
                 <span className="badge-subtitle">15 Mins Prep</span>
@@ -133,9 +164,19 @@ export default function HeroShowcase() {
             {/* Glassmorphic instruction tab */}
             <div className="showcase-hint glass-panel">
               <HelpCircle size={14} />
-              <span>{isTransformed ? 'Hover to tilt dish' : 'Hover to tilt jar | Click Simmer to cook'}</span>
+              <span>{isCurrentlyTransformed ? 'Hover to tilt dish' : 'Hover to tilt jar | Scroll to Cook'}</span>
             </div>
           </div>
+
+          {/* Floating Curved SVG Directional Arrow Guide */}
+          <div className="hero-scroll-guide animate-float-arrow">
+            <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 20 Q50 5 65 40 T50 80" stroke="var(--color-saffron-600)" strokeWidth="3" strokeLinecap="round" fill="none" strokeDasharray="4 4" />
+              <path d="M40 70 L50 80 L62 72" stroke="var(--color-saffron-600)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+            <span className="scroll-guide-label">Scroll to Plate</span>
+          </div>
+
         </div>
 
       </div>

@@ -361,3 +361,41 @@
     justify-content: center;
   }
 }
+
+/* Floating scroll guide arrow styles */
+.hero-scroll-guide {
+  position: absolute;
+  right: -85px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.scroll-guide-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-saffron-600);
+  letter-spacing: 2px;
+  writing-mode: vertical-lr;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+@media (max-width: 1024px) {
+  .hero-scroll-guide {
+    right: -60px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-scroll-guide {
+    display: none;
+  }
+}
