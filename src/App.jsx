@@ -6,6 +6,8 @@ import CategoryNav from './components/CategoryNav.jsx';
 import PlateShowcase from './components/PlateShowcase.jsx';
 import EcoStoryTransform from './components/EcoStoryTransform.jsx';
 import BrandOrigin from './components/BrandOrigin.jsx';
+import RecipesGrid from './components/RecipesGrid.jsx';
+import Testimonials from './components/Testimonials.jsx';
 import Footer from './components/Footer.jsx';
 import DocumentationModal from './components/DocumentationModal.jsx';
 
@@ -43,7 +45,13 @@ export default function App() {
         {/* 7. Brand milestones vertical heritage timeline */}
         <BrandOrigin />
 
-        {/* 8. Footer credits, contact & Compliance checks */}
+        {/* 8. Featured authentic recipes grid */}
+        <RecipesGrid />
+
+        {/* 9. Customer review testimonials */}
+        <Testimonials />
+
+        {/* 10. Footer credits, contact & Compliance checks */}
         <Footer onOpenDocs={() => setIsDocsOpen(true)} />
 
         {/* 9. Glassmorphic Architecture overlay */}

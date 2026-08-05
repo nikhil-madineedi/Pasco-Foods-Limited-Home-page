@@ -12,7 +12,7 @@ export default function Footer({ onOpenDocs }) {
         {/* Box 1: Brand Info */}
         <div className="footer-box brand-info-box">
           <h3 className="footer-logo">PASCO</h3>
-          <p className="footer-tagline">Authentic Indian pastes, pickles, curries & sauces. Established 1975.</p>
+          <p className="footer-tagline">Authentic Indian pastes, pickles, curries & sauces. Established 1990.</p>
           <div className="footer-contact-details">
             <div className="contact-detail-item">
               <MapPin size={14} />
